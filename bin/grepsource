@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ $# -eq 0 ] ; then
+    echo USAGE: grepsource [options] "search term"
+    exit 1
+fi
+
+FIND() {
+  find . -name "*.java" -o \
+      -name "CMakeLists.txt" -o \
+      -name "*.launch" -o \
+      -name "*.xml" -o \
+      -name "*.py" -o \
+      -name "*.h" -o \
+      -name "*.c" -o \
+      -name "*.cpp" -o \
+      -name "*.cc" -o \
+      -name "*.hpp" -o \
+      -name "*.hh"
+}
+
+GREP_COMMAND="grep --color=auto"
+
+if [ $# -eq 1 ] ; then
+    FIND | xargs $GREP_COMMAND "$1"
+fi
+if [ $# -eq 2 ] ; then
+    FIND | xargs $GREP_COMMAND "$1" "$2"
+fi
+if [ $# -eq 3 ] ; then
+    FIND | xargs $GREP_COMMAND "$1" "$2" "$3"
+fi
+if [ $# -eq 4 ] ; then
+    FIND | xargs $GREP_COMMAND "$1" "$2" "$3" "$4"
+fi
+if [ $# -gt 4 ] ; then
+    echo "grepsource does not support more than 4 arguments yet."
+    exit 1
+fi
