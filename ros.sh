@@ -45,6 +45,7 @@ alias jks-g51='export ROS_MASTER_URI=http://jks-g51:11311'
 alias stair4a='export ROS_MASTER_URI=http://stair4a:11311'
 alias jks-al='export ROS_MASTER_URI=http://jks-al:11311'
 alias jks-prbase='export ROS_MASTER_URI=http://jks-prbase:11311'
+alias ael-w530='export ROS_MASTER_URI=http://ael-w530:11311'
 alias btt='export ROS_MASTER_URI=http://btt:11311'
 alias prj='export ROS_MASTER_URI=http://prj:11311'
 alias prk='export ROS_MASTER_URI=http://prk:11311'
@@ -87,15 +88,15 @@ function build_moveit()
 
 function fuerte()
 {
-  source ~/ros/fuerte_precise/setup.bash
+  source /opt/ros/fuerte/setup.bash
 }
 
-function groovy_debs()
+function groovy()
 {
   source /opt/ros/groovy/setup.bash
 }
 
-function groovy()
+function groovy_ws()
 {
   source ~/ros/groovy_precise/catkin_ws/build/devel/setup.bash
   export ROS_WORKSPACE=~/ros/groovy_precise/catkin_ws
