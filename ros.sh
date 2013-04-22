@@ -96,6 +96,11 @@ function groovy()
   source /opt/ros/groovy/setup.bash
 }
 
+function demos()
+{
+  source ~/demos/setup.bash
+}
+
 function groovy_ws()
 {
   source ~/ros/groovy_precise/catkin_ws/build/devel/setup.bash
