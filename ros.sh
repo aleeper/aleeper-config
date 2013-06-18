@@ -6,6 +6,9 @@ alias rebash='. ~/.bashrc'
 alias editbash='vim ~/.bashrc'
 alias backbash='cp ~/.bashrc ~/.bashrc.back'
 
+# auto-complete for ssh hosts
+#complete -o default -o nospace -W “$(awk ‘/^Host / {print $2}’ < $HOME/.ssh/config) scp sftp SSH
+
 # Wrap make and rosmake so that they alert me with a sound when they are done
 make() 
 { 
@@ -98,17 +101,35 @@ function groovy()
 
 function demos()
 {
-  source ~/demos/setup.bash
+  source ~/ros/groovy_precise/cat_ws/devel/setup.bash
+  export ROS_WORKSPACE=~/ros/groovy_precise/cat_ws
+  export ROS_MASTER_URI=http://c1:11311
+  export ROS_IP=`ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
 }
 
-function groovy_ws()
+function moveit_ws()
 {
-  source ~/ros/groovy_precise/catkin_ws/build/devel/setup.bash
-  export ROS_WORKSPACE=~/ros/groovy_precise/catkin_ws
+  source ~/ros/groovy_precise/moveit_ws/devel/setup.bash
+  export ROS_WORKSPACE=~/ros/groovy_precise/moveit_ws
+}
+function cat_ws()
+{
+  source ~/ros/groovy_precise/cat_ws/devel/setup.bash
+  export ROS_WORKSPACE=~/ros/groovy_precise/cat_ws
+}
+function rosbuild_ws()
+{
+  source ~/ros/groovy_precise/rosbuild/setup.bash
+  export ROS_WORKSPACE=~/ros/groovy_precise/rosbuild
 }
 
 function heaphy()
 {
   source /opt/ros/electric/setup.bash
   export ROS_PACKAGE_PATH=~/ros/heaphy_overlay:$ROS_PACKAGE_PATH
+}
+
+function serve()
+{
+  python -m SimpleHTTPServer $1
 }
