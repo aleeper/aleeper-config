@@ -1,0 +1,91 @@
+#!/usr/bin/env python
+import os
+import sys
+
+
+def create_dir(dir_name):
+    try:
+        os.mkdir(dir_name)
+    except OSError:
+        pass
+
+
+def main():
+    header = """#ifndef @INCLUDE_GUARD@
+#define @INCLUDE_GUARD@
+
+namespace @PACKAGE_NAME@ 
+{
+class @CLASS_NAME@ 
+{
+ public:
+  /**
+   * Constructor
+  */
+  @CLASS_NAME@();
+
+  /**
+   * Destructor
+  */
+  ~@CLASS_NAME@();
+
+ private:
+
+};
+}  // namespace @PACKAGE_NAME@
+#endif  // @INCLUDE_GUARD@
+    """
+
+    source = """#include <@PACKAGE_NAME@/@HEADER_NAME@>
+
+namespace @PACKAGE_NAME@ 
+{
+  @CLASS_NAME@::@CLASS_NAME@()
+  {
+
+  }
+
+  @CLASS_NAME@::~@CLASS_NAME@()
+  {
+
+  }
+}  // namespace @PACKAGE_NAME@
+    """
+
+
+    if len(sys.argv) != 2:
+        print "Usage: %s file_name"%sys.argv[0]
+        return
+    file_name = sys.argv[1]
+
+    # create strings
+    package_name = os.getcwd().split('/')[-1]
+    class_name = ''
+    header_name = file_name + ".h"
+    source_name = file_name + ".cpp"
+    for sub_str in file_name.split('_'):
+        class_name += sub_str.title()
+    include_guard = (package_name + "_" + file_name + "_H_").upper()
+    
+    # create directories
+    create_dir('include')
+    create_dir('include/%s'%package_name)
+    create_dir('src')
+
+    # write header
+    header = header.replace("@CLASS_NAME@", class_name)
+    header = header.replace("@INCLUDE_GUARD@", include_guard)
+    header = header.replace("@PACKAGE_NAME@", package_name)
+    with open(os.path.join('include', package_name, header_name), 'w') as f:
+        f.write(header)
+
+    # write source
+    source = source.replace("@CLASS_NAME@", class_name)
+    source = source.replace("@HEADER_NAME@", header_name)
+    source = source.replace("@PACKAGE_NAME@", package_name)
+    with open(os.path.join('src', source_name), 'w') as f:
+        f.write(source)
+
+
+if __name__ == "__main__":
+    main()

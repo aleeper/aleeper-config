@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cd ~aleeper/aleeper-config/willow_vpn_config
-sudo openvpn willow.conf
-
