@@ -12,7 +12,7 @@ alias backbash='cp ~/.bashrc ~/.bashrc.back'
 # Wrap make and rosmake so that they alert me with a sound when they are done
 make() 
 { 
-/usr/bin/make $1
+/usr/bin/make "$@"
 if [ $? -eq 0 ]; then    
   aplay $HOME/aleeper-config/sounds/scifi002-trim.wav;
 else
@@ -115,6 +115,11 @@ function moveit_ws()
 function cat_ws()
 {
   source ~/ros/groovy_precise/cat_ws/devel/setup.bash
+  export ROS_WORKSPACE=~/ros/groovy_precise/cat_ws
+}
+function cat_installed()
+{
+  source ~/ros/groovy_precise/cat_ws/install/setup.bash
   export ROS_WORKSPACE=~/ros/groovy_precise/cat_ws
 }
 function rosbuild_ws()
