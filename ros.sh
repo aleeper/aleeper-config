@@ -32,7 +32,14 @@ dispview () { rosrun image_view disparity_view image:=$1; }
 
 rviz() { rosrun rviz rviz; }
 dashboard() { rosrun pr2_dashboard pr2_dashboard; }
-reconfigure() { rosrun dynamic_reconfigure reconfigure_gui; }
+reconfigure()
+{
+  for i in $(eval echo {1..$1})
+  do
+    echo "Spawning a reconfigure gui..."
+    rosrun dynamic_reconfigure reconfigure_gui &
+  done
+}
 manager() { rosrun pr2_controller_manager pr2_controller_manager; }
 sixaxis() { roslaunch pr2_teleop teleop_joystick.launch; }
 alias gtopic='rostopic list | sort -u | grep'
