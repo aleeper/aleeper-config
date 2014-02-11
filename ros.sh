@@ -10,13 +10,15 @@ alias backbash='cp ~/.bashrc ~/.bashrc.back'
 #complete -o default -o nospace -W “$(awk ‘/^Host / {print $2}’ < $HOME/.ssh/config) scp sftp SSH
 
 # Wrap make and rosmake so that they alert me with a sound when they are done
-make() 
-{ 
-/usr/bin/make $1
-if [ $? -eq 0 ]; then    
+make()
+{
+/usr/bin/make "$@"
+if [ $? -eq 0 ]; then
   aplay $HOME/aleeper-config/sounds/scifi002-trim.wav;
+  return 0;
 else
   aplay $HOME/aleeper-config/sounds/banana-peel.wav;
+  return 1;
 fi
 }
 playrosmake() { rosmake; aplay $HOME/sounds/scifi002.wav; }
@@ -25,7 +27,7 @@ backup() { cp $1 $1.bak; }
 alias gitinfo='. /home/$USER/.git_info.sh'
 
 # time saving :)
-imview () { rosrun image_view image_view image:=$1; } 
+imview () { rosrun image_view image_view image:=$1; }
 dispview () { rosrun image_view disparity_view image:=$1; }
 
 rviz() { rosrun rviz rviz; }
@@ -40,8 +42,8 @@ alias kk='cd -'
 alias up='cd ..'
 alias upp='cd ../..'
 alias uppp='cd ../../..'
-alias upppp='cd ../../../..' 
-alias uppppp='cd ../../../../..' 
+alias upppp='cd ../../../..'
+alias uppppp='cd ../../../../..'
 
 # Computers (hosts)
 alias jks-g51='export ROS_MASTER_URI=http://jks-g51:11311'
@@ -66,6 +68,7 @@ alias hsim='export ROS_MASTER_URI=http://hsim:11311'
 
 alias ls='ls --color=auto'
 export PATH=$HOME/aleeper-config/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
+#export PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
 #ssh-agent sh -c 'ssh-add < /dev/null && bash'
 
 function ws()
