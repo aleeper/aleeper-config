@@ -120,6 +120,11 @@ function cat_ws()
   source ~/ros/groovy_precise/cat_ws/devel/setup.bash
   export ROS_WORKSPACE=~/ros/groovy_precise/cat_ws
 }
+function cat_installed()
+{
+  source ~/ros/groovy_precise/cat_ws/install/setup.bash
+  export ROS_WORKSPACE=~/ros/groovy_precise/cat_ws
+}
 function rosbuild_ws()
 {
   source ~/ros/groovy_precise/rosbuild/setup.bash
