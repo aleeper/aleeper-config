@@ -1,0 +1,13 @@
+[user]
+	name = Adam Leeper
+	email = aleeper@hidof.com
+
+[alias]
+  fp = "!f() { git fetch $1 && git remote prune $1; }; f"
+  meld = !~/git-meld/git-meld.pl
+  st = status
+  sf = submodule foreach
+  l  = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+
+[core]
+  editor = "vim"

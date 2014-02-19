@@ -1,5 +1,0 @@
-sudo apt-get update
-
-sudo apt-get install meshlab audacity vim colorgcc ccache
-
-git clone https://github.com/aleeper/when-changed.git
