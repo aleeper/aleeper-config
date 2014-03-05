@@ -8,6 +8,7 @@ ccache      \
 colorgcc    \
 git         \
 meshlab     \
+tree        \
 vim         \
 
 echo -e "\e[1;32mCopying configuration files...\e[0m"

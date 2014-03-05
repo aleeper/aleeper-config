@@ -4,7 +4,6 @@
 # maybe not needed anymore if I'm using correct workspace management.
 alias rebash='. ~/.bashrc'
 alias editbash='vim ~/.bashrc'
-alias backbash='cp ~/.bashrc ~/.bashrc.back'
 
 # auto-complete for ssh hosts
 #complete -o default -o nospace -W “$(awk ‘/^Host / {print $2}’ < $HOME/.ssh/config) scp sftp SSH
@@ -25,6 +24,8 @@ playrosmake() { rosmake; aplay $HOME/sounds/scifi002.wav; }
 
 backup() { cp $1 $1.bak; }
 alias gitinfo='. /home/$USER/.git_info.sh'
+
+gkl() { gitk --all "$@"; }
 
 # time saving :)
 imview () { rosrun image_view image_view image:=$1; }
