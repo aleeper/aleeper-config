@@ -1,12 +1,17 @@
-echo -e "\e[1;32mInstalling packages...\e[0m"
+echo -e "\e[1;32mUpdating packages...\e[0m"
 
 sudo apt-get update
 
+echo -e "\e[1;32mRunning a dist-upgrade...\e[0m"
+sudo apt-get dist-upgrade
+
+echo -e "\e[1;32mInstalling custom packages...\e[0m"
 sudo apt-get install \
 audacity    \
 ccache      \
 colorgcc    \
 git         \
+libxss1     \
 meshlab     \
 tree        \
 vim         \
