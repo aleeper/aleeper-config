@@ -1,5 +1,5 @@
 echo -e "\e[1;32mUpdating packages...\e[0m"
-
+sudo add-apt-repository ppa:git-core/ppa
 sudo apt-get update
 
 echo -e "\e[1;32mRunning a dist-upgrade...\e[0m"
