@@ -74,7 +74,8 @@ alias prf='export ROS_MASTER_URI=http://prf1:11311'
 alias wbr='export ROS_MASTER_URI=http://wbr:11311'
 alias hsim='export ROS_MASTER_URI=http://hsim:11311'
 
-alias ls='ls --color=auto'
+alias lsdir='for i in $(ls -d */); do echo ${i%%/}; done'
+
 export PATH=$HOME/aleeper-config/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
 #export PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
 #ssh-agent sh -c 'ssh-add < /dev/null && bash'
