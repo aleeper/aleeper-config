@@ -27,6 +27,8 @@ alias gitinfo='. /home/$USER/.git_info.sh'
 
 gkl() { gitk --all "$@"; }
 
+pfp() { for i in "$@"; do readlink -e "`pwd`/$i"; done }
+
 # time saving :)
 imview () { rosrun image_view image_view image:=$1; }
 dispview () { rosrun image_view disparity_view image:=$1; }
