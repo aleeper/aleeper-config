@@ -29,10 +29,11 @@ gkl() { gitk --all "$@"; }
 
 pfp() { for i in "$@"; do readlink -e "`pwd`/$i"; done }
 
-# time saving :)
+configure_tex_inputs() { export TEXINPUTS=/home/aleeper/Documents/teaching/dynamics/a_common: ; }
+
+# Aliases for basic ROS applications
 imview () { for i in "$@"; do (rosrun image_view image_view image:=$i &); done }
 dispview () { rosrun image_view disparity_view image:=$1; }
-
 rviz() { rosrun rviz rviz; }
 dashboard() { rosrun pr2_dashboard pr2_dashboard; }
 reconfigure()
@@ -77,7 +78,7 @@ alias wbr='export ROS_MASTER_URI=http://wbr:11311'
 alias hsim='export ROS_MASTER_URI=http://hsim:11311'
 
 alias lsdir='for i in $(ls -d */); do echo ${i%%/}; done'
-
+# Alternative: ls -d */ | cut -f1 -d'/'
 export PATH=$HOME/aleeper-config/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
 #export PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
 #ssh-agent sh -c 'ssh-add < /dev/null && bash'

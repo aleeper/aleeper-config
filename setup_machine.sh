@@ -26,10 +26,13 @@ audacity    \
 ccache      \
 colorgcc    \
 git         \
+gscan2pdf   \
 libxss1     \
 meshlab     \
 tree        \
 vim         \
+pdfmod      \
+
 
 echo -e "\e[1;32mCopying configuration files...\e[0m"
 for f in config/*; do
