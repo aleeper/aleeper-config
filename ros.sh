@@ -25,7 +25,7 @@ playrosmake() { rosmake; aplay $HOME/sounds/scifi002.wav; }
 backup() { cp $1 $1.bak; }
 alias gitinfo='. /home/$USER/.git_info.sh'
 
-gkl() { gitk --all "$@"; }
+gkl() { (gitk --all "$@" &); }
 
 pfp() { for i in "$@"; do readlink -e "`pwd`/$i"; done }
 
