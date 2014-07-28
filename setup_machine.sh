@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PKG_BASE="git gitk make tree vim"
+PKG_BASE="git gitk make meld tree vim"
 PKG_BUILD="build-essential ccache colorgcc"
 PKG_TOOLS="audacity meshlab gscan2pdf pdfmod"
 #  libxss1     \

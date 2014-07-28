@@ -1,6 +1,8 @@
 ###############################################################################
 # Convenient aliases for quikcly editing and reloading the .bashrc file
 ###############################################################################
+config_dir=/media/home/aleeper/aleeper-config
+
 alias rebash='. ~/.bashrc'
 alias editbash='vim ~/.bashrc'
 
@@ -9,10 +11,10 @@ make()
 {
 /usr/bin/make "$@"
 if [ $? -eq 0 ]; then
-  aplay $HOME/aleeper-config/sounds/scifi002-trim.wav;
+  aplay $config_dir/sounds/scifi002-trim.wav;
   return 0;
 else
-  aplay $HOME/aleeper-config/sounds/banana-peel.wav;
+  aplay $config_dir/sounds/banana-peel.wav;
   return 1;
 fi
 }
@@ -21,7 +23,7 @@ fi
 function serve() {  python -m SimpleHTTPServer $1 ; }
 
 gkl() { (gitk --all "$@" &); }
-configure_tex_inputs() { export TEXINPUTS=/home/aleeper/Documents/teaching/dynamics/a_common: ; }
+configure_tex_inputs() { export TEXINPUTS=$HOME/shared/teaching/dynamics/a_common: ; }
 
 backup() { cp $1 $1.bak; }
 alias gitinfo='. /home/$USER/.git_info.sh'
@@ -44,7 +46,8 @@ pfp() { for i in "$@"; do readlink -e "`pwd`/$i"; done }
 ###############################################################################
 # Add things to PATH
 ###############################################################################
-export PATH=$HOME/aleeper-config/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
+export PATH=$config_dir/bin:$PATH
+#export PATH=$config_dir/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
 
 ###############################################################################
 # Modify command prompt formatting
