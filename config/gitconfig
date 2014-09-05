@@ -4,6 +4,7 @@
 
 [alias]
   fp = "!f() { git fetch $1 && git remote prune $1; }; f"
+  detach-at = "!f() { git checkout `git rev-parse $1`;}; f"
   meld = !~/aleeper-config/git-meld.pl
   st = status
   sf = submodule foreach
