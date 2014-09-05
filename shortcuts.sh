@@ -9,7 +9,7 @@ alias editbash='vim ~/.bashrc'
 # Wrap make so it alerts me with a sound when they are done
 make()
 {
-/usr/bin/make "$@"
+time (/usr/bin/make "$@")
 if [ $? -eq 0 ]; then
   aplay $config_dir/sounds/scifi002-trim.wav;
   return 0;
@@ -63,3 +63,9 @@ PS1="\u@\h:\w\n$"
 ### Don't really remember how this works.
 # auto-complete for ssh hosts
 #complete -o default -o nospace -W “$(awk ‘/^Host / {print $2}’ < $HOME/.ssh/config) scp sftp SSH
+
+
+### QtCreator on 14.04 has a bug with the menus
+if [ $(lsb_release -r | cut -f2) == "14.04" ]; then
+  export QT_QPA_PLATFORMTHEME=
+fi
