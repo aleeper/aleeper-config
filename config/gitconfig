@@ -5,10 +5,15 @@
 [alias]
   fp = "!f() { git fetch $1 && git remote prune $1; }; f"
   detach-at = "!f() { git checkout `git rev-parse $1`;}; f"
-  meld = !~/aleeper-config/git-meld.pl
+  #meld = !~/aleeper-config/git-meld.pl
+  meld = difftool --dir-diff
+  ff = "!f() { git merge --ff-only $1/`git rev-parse --abbrev-ref HEAD`; }; f"
   st = status
   sf = submodule foreach
   l  = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
 
 [core]
   editor = "vim"
+
+[merge]
+  tool = "meld"
