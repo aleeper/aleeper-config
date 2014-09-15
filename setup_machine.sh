@@ -3,6 +3,7 @@
 PKG_BASE="git gitk make meld tree vim"
 PKG_BUILD="build-essential ccache colorgcc"
 PKG_TOOLS="audacity meshlab gscan2pdf pdfmod"
+PKG_EXTRA="compiz-plugins-extra gnome-tweak-tool"
 #  libxss1     \
 
 
@@ -34,6 +35,7 @@ function install_packages {
   sudo apt-get install -y $PKG_BASE
   sudo apt-get install -y $PKG_BUILD
   sudo apt-get install -y $PKG_TOOLS
+  sudo apt-get install -y $PKG_EXTRA
 }
 
 function copy_config_files {
