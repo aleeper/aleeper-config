@@ -1,6 +1,6 @@
 [user]
 	name = Adam Leeper
-	email = aleeper@hidof.com
+	email = adamleeper@gmail.com
 
 [alias]
   fp = "!f() { git fetch $1 && git remote prune $1; }; f"
