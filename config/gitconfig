@@ -10,6 +10,7 @@
   l  = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
   meld = difftool --dir-diff
   #meld = !~/aleeper-config/git-meld.pl
+  rp = rev-parse --short
   sf = submodule foreach
   st = status
 
