@@ -1,7 +1,7 @@
 ###############################################################################
 # Convenient aliases for quikcly editing and reloading the .bashrc file
 ###############################################################################
-config_dir=/media/home/aleeper/aleeper-config
+config_dir=$HOME/aleeper-config
 
 alias rebash='. ~/.bashrc'
 alias editbash='vim ~/.bashrc'
