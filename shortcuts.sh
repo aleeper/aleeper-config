@@ -69,3 +69,5 @@ PS1="\u@\h:\w\n$"
 if [ $(lsb_release -r | cut -f2) == "14.04" ]; then
   export QT_QPA_PLATFORMTHEME=
 fi
+
+git() { if [[ $1 == 'merge' ]]; then echo $'Use git5 merge, not git merge. \ngit merge does not understand how to merge the READONLY link and it can corrupt your branch, so stay away from it.  \ntype "unset -f git" to remove this warning'; else command git "$@"; fi; }
