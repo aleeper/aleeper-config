@@ -1,7 +1,7 @@
 ###############################################################################
 # Convenient aliases for quikcly editing and reloading the .bashrc file
 ###############################################################################
-config_dir=$HOME/Documents/aleeper-config
+config_dir=$HOME/aleeper-config
 
 alias rebash='. ~/.bashrc'
 alias editbash='vim ~/.bashrc'
@@ -66,3 +66,5 @@ PS1="%10F%m%f:%11F%1~%f${NEWLINE}\$ "
 ### Don't really remember how this works.
 # auto-complete for ssh hosts
 #complete -o default -o nospace -W “$(awk ‘/^Host / {print $2}’ < $HOME/.ssh/config) scp sftp SSH
+
+git() { if [[ $1 == 'merge' ]]; then echo $'Use git5 merge, not git merge. \ngit merge does not understand how to merge the READONLY link and it can corrupt your branch, so stay away from it.  \ntype "unset -f git" to remove this warning'; else command git "$@"; fi; }

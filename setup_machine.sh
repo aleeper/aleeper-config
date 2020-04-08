@@ -57,6 +57,21 @@ function install_when_changed {
   fi
 }
 
+function install_gti {
+  echo -e "\x1B[1;32mInstalling \"gti\"\x1B[0m"
+  if [ -d ./gti ]; then
+    echo -e "gti is already checked out, skipping"
+  else
+    git clone https://github.com/rwos/gti.git
+    (cd gti/ && make)
+    if [ -f gti/gti ]; then
+      cp -v gti/gti bin/gti
+    else
+      echo -e "gti could not be built!"
+    fi
+  fi
+}
+
 function install_google_translate {
   if [ -d ./google-translate-cli-master ]; then
     echo -e "google-translate-cli already exists, skipping"
@@ -70,13 +85,12 @@ function install_google_translate {
   fi
 }
 
-
-
 echo -e "\x1B[32mRunning setup script.\x1B[0m"
-upgrade_packages
-install_packages
-copy_config_files
-install_when_changed
+#upgrade_packages
+#install_packages
+#copy_config_files
+#install_when_changed
+install_gti
 #install_google_translate
 echo -e "\x1B[32mAll done.\x1B[0m"
 
