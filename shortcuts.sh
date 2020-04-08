@@ -1,7 +1,7 @@
 ###############################################################################
 # Convenient aliases for quikcly editing and reloading the .bashrc file
 ###############################################################################
-config_dir=/media/home/aleeper/aleeper-config
+config_dir=$HOME/Documents/aleeper-config
 
 alias rebash='. ~/.bashrc'
 alias editbash='vim ~/.bashrc'
@@ -26,7 +26,7 @@ gkl() { (gitk --all "$@" &); }
 configure_tex_inputs() { export TEXINPUTS=$HOME/shared/teaching/dynamics/a_common: ; }
 
 backup() { cp $1 $1.bak; }
-alias gitinfo='. /home/$USER/.git_info.sh'
+alias gitinfo='. $HOME/.git_info.sh'
 
 ###############################################################################
 # Directory navigation
@@ -55,7 +55,10 @@ export PATH=$config_dir/bin:$PATH
 #export MYPS='$(echo -n "${PWD/#$HOME/~}" | awk -F "/" '"'"'{if (length($0) > 14) { if (NF>4) print $1 "/" $2 "/.../" $(NF-1) "/" $NF; else if (NF>3) print $1 "/" $2 "/.../" $NF; else print $1 "/.../" $NF; } else print $0;}'"'"')'
 #PS1='$(eval "echo ${MYPS}")$ '
 #PROMPT_DIRTRIM=2
-PS1="\u@\h:\w\n$"
+#PS1="\u@\h:\w\n$"
+#PS1="\u\$ "
+NEWLINE=$'\n'
+PS1="%10F%m%f:%11F%1~%f${NEWLINE}\$ "
 
 ### Don't remember if I need this.
 #ssh-agent sh -c 'ssh-add < /dev/null && bash'
@@ -63,9 +66,3 @@ PS1="\u@\h:\w\n$"
 ### Don't really remember how this works.
 # auto-complete for ssh hosts
 #complete -o default -o nospace -W “$(awk ‘/^Host / {print $2}’ < $HOME/.ssh/config) scp sftp SSH
-
-
-### QtCreator on 14.04 has a bug with the menus
-if [ $(lsb_release -r | cut -f2) == "14.04" ]; then
-  export QT_QPA_PLATFORMTHEME=
-fi
