@@ -63,15 +63,12 @@ export PATH=$config_dir/bin:$PATH
 
 git() { if [[ $1 == 'merge' ]]; then echo $'Use git5 merge, not git merge. \ngit merge does not understand how to merge the READONLY link and it can corrupt your branch, so stay away from it.  \ntype "unset -f git" to remove this warning'; else command git "$@"; fi; }
 
-
-DIR=`dirname $0`
 if [ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
    # assume Zsh
-   source $DIR/zsh-settings.sh
+   source $config_dir/zsh-settings.sh
 elif [ -n "`$SHELL -c 'echo $BASH_VERSION'`" ]; then
    # assume Bash
-   source $DIR/bash-settings.sh
-elif [ -n "`$SHELL -c 'echo $BASH_VERSION'`" ]; then
+   source $config_dir/bash-settings.sh
 else
    echo "WARNING: shell type not handled: $SHELL"
 fi
