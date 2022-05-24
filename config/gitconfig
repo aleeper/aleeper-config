@@ -4,15 +4,18 @@
 
 [alias]
   branch-clean = "!f() { git branch --merged | grep -v \"\\*\" | grep -v master | xargs --no-run-if-empty -n 1 git branch -d;}; f"
+  bd = "!f() { echo \"Current commit hash: `git rp HEAD)`\"; CURRENT_BRANCH=$(git branch --show-current); echo \"Current branch: $CURRENT_BRANCH\"; git -c advice.detachedHead=false checkout origin/master; git branch -D $CURRENT_BRANCH; }; f"
   cp = cherry-pick
-  detach-at = "!f() { git checkout `git rev-parse $1`;}; f"
+  branch-at = "!f() { git checkout -b $1 $2 --no-track ;}; f"
+  detach-at = "!f() { git -c advice.detachedHead=false checkout `git rev-parse $1`;}; f"
   ff = "!f() { git merge --ff-only $1/`git rev-parse --abbrev-ref HEAD`; }; f"
   fp = fetch --prune
   l  = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
-  #meld = !~/aleeper-config/git-meld.pl
   meld = difftool --dir-diff
   meld-master = "!f() { git meld `git merge-base origin/master $1` $1;}; f"
   meld-base = "!f() { git meld `git merge-base $1 $2` $2; }; f"
+  fd = "!f() { git diff --name-only `git merge-base origin/master HEAD` HEAD;}; f"
+  mm = "!f() { git meld `git merge-base origin/master HEAD` HEAD;}; f"
   rp = rev-parse --short
   sf = submodule foreach
   st = status
@@ -22,3 +25,5 @@
 
 [merge]
   tool = "meld"
+[blame]
+  ignoreRevsFile = .git-blame-ignore-revs
