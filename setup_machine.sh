@@ -36,6 +36,7 @@ function install_packages {
   sudo apt-get install -y $PKG_BUILD
   sudo apt-get install -y $PKG_TOOLS
   sudo apt-get install -y $PKG_EXTRA
+  pip3 install pypyp
 }
 
 function copy_config_files {
