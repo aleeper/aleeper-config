@@ -43,6 +43,10 @@ alias lsdir='for i in $(ls -d */); do echo ${i%%/}; done'
 
 pfp() { for i in "$@"; do readlink -e "`pwd`/$i"; done }
 
+alias tmls='tmux ls'
+alias tma='tmux attach -t'
+alias tmr='tmux rename-session -t'
+alias tmn='tmux new -s'
 ###############################################################################
 # Add things to PATH
 ###############################################################################
@@ -60,7 +64,8 @@ export PATH=$config_dir/bin:$PATH
 # auto-complete for ssh hosts
 #complete -o default -o nospace -W “$(awk ‘/^Host / {print $2}’ < $HOME/.ssh/config) scp sftp SSH
 
-git() { if [[ $1 == 'merge' ]]; then echo $'Use git5 merge, not git merge. \ngit merge does not understand how to merge the READONLY link and it can corrupt your branch, so stay away from it.  \ntype "unset -f git" to remove this warning'; else command git "$@"; fi; }
+#git() { if [[ $1 == 'merge' ]]; then echo $'Use git5 merge, not git merge. \ngit merge does not understand how to merge the READONLY link and it can corrupt your branch, so stay away from it.  \ntype "unset -f git" to remove this warning'; else command git "$@"; fi; }
+
 
 if [ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
    # assume Zsh

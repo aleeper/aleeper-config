@@ -1,0 +1,18 @@
+session_name: stack_dev
+windows:
+  - window_name: services
+    start_directory: ~/code/core-stack
+    layout: main-vertical
+    panes:
+      - shell_command:
+        - dinto
+        - echo "one"
+      - shell_command:
+        - dinto
+        - echo "two"
+  - window_name: interactive
+    start_directory: ~/code/core-stack
+    panes:
+      - shell_command:
+        - dinto
+        - echo "three"

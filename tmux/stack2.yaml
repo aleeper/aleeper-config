@@ -1,0 +1,17 @@
+session_name: stack_tests
+windows:
+  - window_name: window-1
+    start_directory: ~/code/core-stack
+    layout: main-vertical
+    panes:
+      - shell_command:
+        - dinto
+        - git branch
+        - git st
+  - window_name: window-2
+    start_directory: ~/code/core-stack
+    panes:
+      - shell_command:
+        - dinto
+        - git branch
+        - git st

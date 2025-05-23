@@ -3,8 +3,13 @@
   email = adamleeper@gmail.com
 
 [alias]
+  coom = checkout origin/master
+  coma = checkout `git ancestor`
+  ancestor = merge-base origin/master HEAD
   branch-clean = "!f() { git branch --merged | grep -v \"\\*\" | grep -v master | xargs --no-run-if-empty -n 1 git branch -d;}; f"
   bd = "!f() { echo \"Current commit hash: `git rp HEAD)`\"; CURRENT_BRANCH=$(git branch --show-current); echo \"Current branch: $CURRENT_BRANCH\"; git -c advice.detachedHead=false checkout origin/master; git branch -D $CURRENT_BRANCH; }; f"
+  diff-merge-base-master-head = "!f() { git diff `git merge-base origin/master HEAD` HEAD; }; f"
+  merge-and-delete = "!f() { git checkout $1; if [ $? != 0 ]; then echo 'aborting'; return; fi; if [ \"`git diff-merge-base-master-head`\" ]; then echo 'Non-zero diff!'; git merge origin/master; echo '\nRun the command again'; else git bd; fi;}; f"
   cp = cherry-pick
   branch-at = "!f() { git checkout -b $1 $2 --no-track ;}; f"
   detach-at = "!f() { git -c advice.detachedHead=false checkout `git rev-parse $1`;}; f"
@@ -16,6 +21,7 @@
   meld-base = "!f() { git meld `git merge-base $1 $2` $2; }; f"
   fd = "!f() { git diff --name-only `git merge-base origin/master HEAD` HEAD;}; f"
   mm = "!f() { git meld `git merge-base origin/master HEAD` HEAD;}; f"
+  dm = "!f() { git diff `git merge-base origin/master HEAD` HEAD;}; f"
   rp = rev-parse --short
   sf = submodule foreach
   st = status
@@ -27,3 +33,6 @@
   tool = "meld"
 [blame]
   ignoreRevsFile = .git-blame-ignore-revs
+
+[advice]
+  detachedHead = false
