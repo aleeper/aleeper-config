@@ -9,7 +9,7 @@ if command -v afplay &> /dev/null; then APLAY=afplay; fi
 # Wrap make so it alerts me with a sound when they are done
 make()
 {
-time (/usr/bin/make "$@")
+/usr/bin/time -f "User: %U, System: %S, Real: %e" /usr/bin/make "$@"
 if [ $? -eq 0 ]; then
   $APLAY $config_dir/sounds/scifi002-trim.wav;
   return 0;
