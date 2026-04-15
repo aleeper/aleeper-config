@@ -55,13 +55,18 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
   brew install --cask alacritty
 else
   sudo apt-get install -y \
-    alacritty \
     bat \
+    cmake \
     eza \
     fd-find \
     fzf \
     git-delta \
+    libfontconfig-dev \
+    libfreetype-dev \
+    libxcb-xfixes0-dev \
+    libxkbcommon-dev \
     ncdu \
+    pkg-config \
     ripgrep \
     zoxide \
     zsh \
@@ -73,15 +78,15 @@ echo "  Done."
 # ── Nerd Font (JetBrainsMono — required for p10k and nvim icons) ──────────────
 echo ""
 echo "── Nerd Font ────────────────────────────────────────────────"
+if [[ "$PLATFORM" == "Darwin" ]]; then
+  FONT_DIR="$HOME/Library/Fonts"
+else
+  FONT_DIR="$HOME/.local/share/fonts"
+fi
 if [[ -f "$FONT_DIR/JetBrainsMonoNerdFont-Regular.ttf" ]]; then
   echo "  Already installed: JetBrainsMono Nerd Font"
 else
   echo "  Installing JetBrainsMono Nerd Font..."
-  if [[ "$PLATFORM" == "Darwin" ]]; then
-    FONT_DIR="$HOME/Library/Fonts"
-  else
-    FONT_DIR="$HOME/.local/share/fonts"
-  fi
   mkdir -p "$FONT_DIR"
   TMP="$(mktemp -d)"
   curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz \
@@ -167,6 +172,33 @@ else
   chsh -s "$(which zsh)"
 fi
 unset _configured_shell
+
+# ── Rust (required for cargo install alacritty) ───────────────────────────────
+if [[ "$PLATFORM" != "Darwin" ]]; then
+  echo ""
+  echo "── Rust ─────────────────────────────────────────────────────"
+  if command -v cargo >/dev/null 2>&1 || [[ -f "$HOME/.cargo/bin/cargo" ]]; then
+    echo "  Already installed: $(cargo --version 2>/dev/null || $HOME/.cargo/bin/cargo --version)"
+  else
+    echo "  Installing Rust via rustup..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+    echo "  Installed: $("$HOME/.cargo/bin/cargo" --version)"
+  fi
+  source "$HOME/.cargo/env"
+fi
+
+# ── Alacritty (Linux — build from source via cargo for latest version) ────────
+if [[ "$PLATFORM" != "Darwin" ]]; then
+  echo ""
+  echo "── Alacritty ────────────────────────────────────────────────"
+  if [[ -f "$HOME/.cargo/bin/alacritty" ]]; then
+    echo "  Already installed: $("$HOME/.cargo/bin/alacritty" --version)"
+  else
+    echo "  Building Alacritty via cargo (this takes a few minutes)..."
+    cargo install alacritty --locked
+    echo "  Installed: $(alacritty --version)"
+  fi
+fi
 
 # ── Neovim (Linux only — macOS gets it via brew above) ───────────────────────
 if [[ "$PLATFORM" != "Darwin" ]]; then
