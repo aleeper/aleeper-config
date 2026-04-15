@@ -40,11 +40,9 @@ else
   alias l='ls -CF'
 fi
 
-# bat → cat (Ubuntu installs as 'batcat')
-if command -v bat >/dev/null 2>&1; then
-  alias cat='bat'
-elif command -v batcat >/dev/null 2>&1; then
-  alias cat='batcat'
+# bat (Ubuntu installs as 'batcat' due to naming conflict)
+if ! command -v bat >/dev/null 2>&1 && command -v batcat >/dev/null 2>&1; then
+  alias bat='batcat'
 fi
 
 # ncdu → du (interactive disk usage)
