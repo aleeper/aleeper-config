@@ -1,0 +1,65 @@
+[user]
+  name = Adam Leeper
+  email = adamleeper@gmail.com
+
+# Work repos override the email above. Create ~/.gitconfig.work containing:
+#   [user]
+#     email = adam@applied.co
+[includeIf "gitdir:~/code/"]
+  path = ~/.gitconfig.work
+[includeIf "gitdir:/media/drive2/"]
+  path = ~/.gitconfig.work
+[includeIf "gitdir:/media/drive3/"]
+  path = ~/.gitconfig.work
+
+[alias]
+  ancestor = merge-base origin/master HEAD
+  bd = "!f() { echo \"Current commit hash: `git rp HEAD)`\"; CURRENT_BRANCH=$(git branch --show-current); echo \"Current branch: $CURRENT_BRANCH\"; git -c advice.detachedHead=false checkout origin/master; git branch -D $CURRENT_BRANCH; }; f"
+  branch-at = "!f() { git checkout -b $1 $2 --no-track ;}; f"
+  branch-clean = "!f() { git branch --merged | grep -v \"\\*\" | grep -v master | xargs --no-run-if-empty -n 1 git branch -d;}; f"
+  coma = checkout `git ancestor`
+  coom = checkout origin/master
+  cp = cherry-pick
+  d = "!f() { git detach-at ${1:-HEAD}; }; f"
+  dd = "!bash -c 'git diff --no-index <(git show -p \"$1\") <(git show -p \"$2\")' -"
+  detach-at = "!f() { git -c advice.detachedHead=false checkout `git rev-parse $1`;}; f"
+  diff-merge-base-master-head = "!f() { git diff `git merge-base origin/master HEAD` HEAD; }; f"
+  dm = "!f() { git diff `git merge-base origin/master HEAD` HEAD;}; f"
+  fd = "!f() { git diff --name-only $1 HEAD;}; f"
+  fdm = "!f() { git diff --name-only `git merge-base origin/master HEAD` HEAD;}; f"
+  ff = "!f() { git merge --ff-only $1/`git rev-parse --abbrev-ref HEAD`; }; f"
+  fp = fetch --prune
+  l  = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+  meld = difftool --dir-diff
+  meld-base = "!f() { git meld `git merge-base $1 $2` $2; }; f"
+  meld-master = "!f() { git meld `git merge-base origin/master $1` $1;}; f"
+  merge-and-delete = "!f() { git checkout $1; if [ $? != 0 ]; then echo 'aborting'; return; fi; if [ \"`git diff-merge-base-master-head`\" ]; then echo 'Non-zero diff!'; git merge origin/master; echo '\nRun the command again'; else git bd; fi;}; f"
+  mm = "!f() { git meld `git merge-base origin/master HEAD` HEAD;}; f"
+  move-safe = "!f() { dest=\"master\"; flag=\"\"; commits=(); failed=\"\"; while [ $# -gt 0 ]; do case \"$1\" in -d) dest=\"$2\"; shift 2;; -s|-x) flag=\"$1\"; shift; commits=(\"$@\"); break;; *) echo \"Usage: git-move-safe [-d <dest>] [-s|-x] <commit1> [commit2] ...\"; return 1;; esac; done; if [ -z \"$flag\" ]; then echo \"Error: Must specify -s or -x\"; return 1; fi; if [ ${#commits[@]} -eq 0 ]; then echo \"Error: No commits specified\"; return 1; fi; for commit in \"${commits[@]}\"; do echo \"Processing $commit...\"; if git move -d \"$dest\" \"$flag\" \"$commit\"; then echo \"Success: $commit\"; else failed=\"$failed $commit\"; echo \"Failed: $commit\"; fi; echo \"\"; done; if [ -n \"$failed\" ]; then echo \"Failed commits (try with --merge):\"; echo \"$failed\" | tr ' ' '\\n' | grep -v '^$'; return 1; else echo \"All commits processed successfully!\"; fi; }; f"
+  rp = rev-parse --short
+  sf = submodule foreach
+  st = status
+
+[core]
+  editor = "vim"
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true
+  side-by-side = true
+  light = false
+
+[merge]
+  tool = "meld"
+
+[blame]
+  ignoreRevsFile = .git-blame-ignore-revs
+
+[advice]
+  detachedHead = false
+
+[credential]
+  helper = store

@@ -1,13 +1,20 @@
 {
-	"auto_match_enabled": false,
-	"font_size": 16,
-	"ignored_packages":
-	[
-		"Vintage"
-	],
-	"rulers":
-	[
-		80
-	],
-	"translate_tabs_to_spaces": true
+    // ── Editor appearance ─────────────────────────────────────────────────
+    "font_size": 16,
+    "rulers": [80],
+
+    // ── Tabs ──────────────────────────────────────────────────────────────
+    "tab_size": 2,
+    "translate_tabs_to_spaces": true,
+    "enable_tab_scrolling": false,  // wrap tabs (mirrors Cursor wrapTabs)
+
+    // ── Behavior ──────────────────────────────────────────────────────────
+    "preview_on_click": false,      // mirrors Cursor enablePreview: false
+    "ensure_newline_at_eof_on_save": true,
+    "trim_trailing_white_space_on_save": true,  // mirrors vimrc BufWritePre
+
+    // ── Ignored ───────────────────────────────────────────────────────────
+    // Cursor-specific settings with no Sublime equivalent:
+    //   window.commandCenter, workbench.colorCustomizations,
+    //   cursor.composer.*, indentRainbow.*, gitlens.*
 }

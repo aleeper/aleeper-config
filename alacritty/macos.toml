@@ -1,0 +1,12 @@
+# macOS-specific Alacritty overrides
+# Symlinked to ~/.config/alacritty/platform.toml by install.sh
+
+[window]
+# Hide the title bar on macOS for a cleaner look with tmux
+decorations = "buttonless"
+# Option key as Alt — essential for shell word navigation and many keybindings
+option_as_alt = "Both"
+
+[font]
+# macOS renders fonts slightly larger — nudge down to match Linux feel
+size = 13.0

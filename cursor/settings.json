@@ -1,0 +1,26 @@
+{
+    "window.commandCenter": true,
+    "workbench.colorCustomizations": {
+        "tab.activeBorderTop": "#ff0000",
+        "tab.activeBorder": "#00ff00",
+        "tab.activeBackground": "#004400",
+        "tab.activeForeground": "#ffffff"
+    },
+    "editor.fontSize": 16,
+    "editor.rulers": [80],
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "indentRainbow.colors": [
+        "rgba(255,255,0,0.05)",
+        "rgba(0,127,255,0.05)",
+        "rgba(191,0,255,0.05)"
+    ],
+    "indentRainbow.ignoreErrorLanguages": [
+        "*"
+    ],
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.editorActionsLocation": "default",
+    "workbench.editor.wrapTabs": true,
+    "cursor.composer.queueMessageDefaultBehavior": "queue",
+    "git.blame.editorDecoration.enabled": true,
+    "gitlens.currentLine.enabled": false
+}

@@ -1,0 +1,66 @@
+# Alacritty config — shared across Linux and macOS.
+# Platform-specific overrides live in platform.toml (symlinked by install.sh).
+#
+# import is a top-level key (pre-0.13 format); newer versions use [general].
+# install.sh handles this difference via the platform symlink.
+import = ["~/.config/alacritty/platform.toml"]
+
+# ── Font ──────────────────────────────────────────────────────────────────────
+[font]
+size = 13.0
+
+[font.normal]
+family = "JetBrainsMono Nerd Font Mono"
+style  = "Regular"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font Mono"
+style  = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font Mono"
+style  = "Italic"
+
+# ── Window ────────────────────────────────────────────────────────────────────
+[window]
+padding = { x = 8, y = 8 }
+dynamic_padding = false
+decorations = "full"
+
+# ── Scrollback ────────────────────────────────────────────────────────────────
+[scrolling]
+# tmux handles scrollback — keep this small
+history = 2000
+
+# ── Github Dark colors ────────────────────────────────────────────────────────
+[colors.primary]
+background = "#0d1117"
+foreground = "#e6edf3"
+
+[colors.cursor]
+text   = "#0d1117"
+cursor = "#e6edf3"
+
+[colors.selection]
+text       = "#0d1117"
+background = "#388bfd"
+
+[colors.normal]
+black   = "#484f58"
+red     = "#ff7b72"
+green   = "#3fb950"
+yellow  = "#d29922"
+blue    = "#58a6ff"
+magenta = "#d2a8ff"
+cyan    = "#39c5cf"
+white   = "#b1bac4"
+
+[colors.bright]
+black   = "#6e7681"
+red     = "#ffa198"
+green   = "#56d364"
+yellow  = "#e3b341"
+blue    = "#79c0ff"
+magenta = "#f0a0ff"
+cyan    = "#76e3ea"
+white   = "#e6edf3"

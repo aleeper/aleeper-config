@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# Personal ~/.bashrc — mirrors zsh/zshrc structure.
+# Shell-specific setup here; personal config lives in shell/*.sh.
+
+# Non-interactive shells get nothing
+case $- in
+  *i*) ;;
+    *) return;;
+esac
+
+# ── History ───────────────────────────────────────────────────────────────────
+HISTCONTROL=ignoreboth
+HISTSIZE=50000
+HISTFILESIZE=100000
+shopt -s histappend
+shopt -s checkwinsize
+
+# ── Colors ────────────────────────────────────────────────────────────────────
+if [ -x /usr/bin/dircolors ]; then
+  eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  alias grep='grep --color=auto'
+fi
+alias ll='ls -alF'
+alias la='ls -A'
+
+# ── Bash completion ───────────────────────────────────────────────────────────
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# ── Personal config ───────────────────────────────────────────────────────────
+source "$HOME/aleeper-config/shell/env.sh"
+source "$HOME/aleeper-config/shell/aliases.sh"
+source "$HOME/aleeper-config/shell/functions.sh"
+# Uncomment to load ROS helpers:
+# source "$HOME/aleeper-config/shell/ros.sh"
+
+
+# ── fzf ───────────────────────────────────────────────────────────────────────
+[[ -f /usr/share/doc/fzf/examples/key-bindings.bash ]] && \
+  source /usr/share/doc/fzf/examples/key-bindings.bash
+
+# ── NVM ───────────────────────────────────────────────────────────────────────
+export NVM_DIR="$HOME/.nvm"
+# Eagerly add the active nvm node to PATH so subprocesses (Mason, etc.) see it
+if [[ -d "$NVM_DIR/versions/node" ]]; then
+  _nvm_default="$NVM_DIR/alias/default"
+  if [[ -f "$_nvm_default" ]]; then
+    _nvm_ver="$(cat "$_nvm_default")"
+    while [[ -f "$NVM_DIR/alias/$_nvm_ver" ]]; do
+      _nvm_ver="$(cat "$NVM_DIR/alias/$_nvm_ver")"
+    done
+    export PATH="$NVM_DIR/versions/node/$_nvm_ver/bin:$PATH"
+  fi
+  unset _nvm_default _nvm_ver
+fi
+nvm() {
+  unset -f nvm
+  [[ -s "$NVM_DIR/nvm.sh" ]]          && source "$NVM_DIR/nvm.sh"
+  [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+  nvm "$@"
+}
+
+# ── Cargo ─────────────────────────────────────────────────────────────────────
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
+# ── Zoxide (smarter cd — use `z` to jump by frecency) ────────────────────────
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init bash)"
+
+# ── ~/.shell.d — machine/work-specific overrides (not in repo) ───────────────
+# Drop any *.sh file into ~/.shell.d/ to have it sourced automatically.
+if [[ -d "$HOME/.shell.d" ]]; then
+  for _f in "$HOME/.shell.d"/*.sh; do
+    [[ -f "$_f" ]] && source "$_f"
+  done
+  unset _f
+fi

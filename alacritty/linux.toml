@@ -1,0 +1,5 @@
+# Linux-specific Alacritty overrides
+# Symlinked to ~/.config/alacritty/platform.toml by install.sh
+
+# Nothing Linux-specific needed beyond the base config.
+# (Placeholder so the import doesn't error on a fresh install.)

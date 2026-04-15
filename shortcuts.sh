@@ -1,78 +1,10 @@
-###############################################################################
-# Convenient aliases for quikcly editing and reloading the .bashrc file
-###############################################################################
-config_dir=$HOME/aleeper-config
+#!/usr/bin/env sh
+# Backward-compatibility shim — sourced by the old ~/.bashrc entry.
+# After running install.sh and switching to zsh, this file is no longer needed.
+# New canonical locations: shell/aliases.sh, shell/functions.sh, shell/env.sh
 
-if command -v aplay &> /dev/null; then APLAY=aplay; fi
-if command -v afplay &> /dev/null; then APLAY=afplay; fi
+_cfg="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 
-# Wrap make so it alerts me with a sound when they are done
-make()
-{
-/usr/bin/time -f "User: %U, System: %S, Real: %e" /usr/bin/make "$@"
-if [ $? -eq 0 ]; then
-  $APLAY $config_dir/sounds/scifi002-trim.wav;
-  return 0;
-else
-  $APLAY $config_dir/sounds/banana-peel.wav;
-  return 1;
-fi
-}
-
-
-function serve() {  python -m SimpleHTTPServer $1 ; }
-
-gkl() { (gitk --all "$@" &); }
-configure_tex_inputs() { export TEXINPUTS=$HOME/shared/teaching/dynamics/a_common: ; }
-
-backup() { cp $1 $1.bak; }
-alias gitinfo='. $HOME/.git_info.sh'
-
-###############################################################################
-# Directory navigation
-###############################################################################
-alias kk='cd -'
-alias up='cd ..'
-alias upp='cd ../..'
-alias uppp='cd ../../..'
-alias upppp='cd ../../../..'
-alias uppppp='cd ../../../../..'
-
-alias lsdir='for i in $(ls -d */); do echo ${i%%/}; done'
-# Alternative: ls -d */ | cut -f1 -d'/'
-
-pfp() { for i in "$@"; do readlink -e "`pwd`/$i"; done }
-
-alias tmls='tmux ls'
-alias tma='tmux attach -t'
-alias tmr='tmux rename-session -t'
-alias tmn='tmux new -s'
-###############################################################################
-# Add things to PATH
-###############################################################################
-export PATH=$config_dir/bin:$PATH
-#export PATH=$config_dir/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
-
-###############################################################################
-# Modify command prompt formatting
-###############################################################################
-
-### Don't remember if I need this.
-#ssh-agent sh -c 'ssh-add < /dev/null && bash'
-
-### Don't really remember how this works.
-# auto-complete for ssh hosts
-#complete -o default -o nospace -W “$(awk ‘/^Host / {print $2}’ < $HOME/.ssh/config) scp sftp SSH
-
-#git() { if [[ $1 == 'merge' ]]; then echo $'Use git5 merge, not git merge. \ngit merge does not understand how to merge the READONLY link and it can corrupt your branch, so stay away from it.  \ntype "unset -f git" to remove this warning'; else command git "$@"; fi; }
-
-
-if [ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
-   # assume Zsh
-   source $config_dir/zsh-settings.sh
-elif [ -n "`$SHELL -c 'echo $BASH_VERSION'`" ]; then
-   # assume Bash
-   source $config_dir/bash-settings.sh
-else
-   echo "WARNING: shell type not handled: $SHELL"
-fi
+source "$_cfg/shell/env.sh"
+source "$_cfg/shell/aliases.sh"
+source "$_cfg/shell/functions.sh"

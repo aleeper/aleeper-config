@@ -1,0 +1,24 @@
+set autoindent
+filetype plugin indent on
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set vb t_vb=
+set ruler
+set nohls
+set incsearch
+"set nowrap
+syntax enable
+
+" Restore cursor position on file open
+au BufReadPost * if line("'\"") > 0 &&
+  \ line("'\"") <= line("$") | exe "normal g'\"" | endif
+
+" Real tabs for Makefiles
+autocmd FileType make setlocal noexpandtab
+
+" Strip trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
+
+" ROS launch file syntax
+autocmd BufRead,BufNewFile *.launch setfiletype roslaunch
