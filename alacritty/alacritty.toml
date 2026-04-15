@@ -1,9 +1,3 @@
-# Alacritty config — shared across Linux and macOS.
-# Platform-specific overrides live in platform.toml (symlinked by install.sh).
-#
-# import is a top-level key (pre-0.13 format); newer versions use [general].
-# install.sh handles this difference via the platform symlink.
-import = ["~/.config/alacritty/platform.toml"]
 
 # ── Font ──────────────────────────────────────────────────────────────────────
 [font]
@@ -64,3 +58,11 @@ blue    = "#79c0ff"
 magenta = "#f0a0ff"
 cyan    = "#76e3ea"
 white   = "#e6edf3"
+
+[general]
+# Alacritty config — shared across Linux and macOS.
+# Platform-specific overrides live in platform.toml (symlinked by install.sh).
+#
+# import is a top-level key (pre-0.13 format); newer versions use [general].
+# install.sh handles this difference via the platform symlink.
+import = ["~/.config/alacritty/platform.toml"]

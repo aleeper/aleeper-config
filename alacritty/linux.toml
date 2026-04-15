@@ -1,5 +1,6 @@
+[terminal]
 # Linux-specific Alacritty overrides
 # Symlinked to ~/.config/alacritty/platform.toml by install.sh
 
-[shell]
+[terminal.shell]
 program = "/usr/bin/zsh"
