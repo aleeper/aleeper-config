@@ -57,6 +57,14 @@ done
 unset _f
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
+# ── Keybindings ───────────────────────────────────────────────────────────────
+bindkey '\e[1;3D' backward-word   # Alt+Left  (Alacritty Linux)
+bindkey '\e[1;3C' forward-word    # Alt+Right (Alacritty Linux)
+bindkey '\eb'     backward-word   # Option+Left  (macOS / some terminals)
+bindkey '\ef'     forward-word    # Option+Right (macOS / some terminals)
+bindkey '\e^H'    backward-kill-word  # Alt+Backspace — delete previous word
+bindkey '\e[3;3~' kill-word           # Alt+Delete   — delete next word
+
 # ── Personal config ───────────────────────────────────────────────────────────
 source "$HOME/aleeper-config/shell/env.sh"
 source "$HOME/aleeper-config/shell/aliases.sh"
