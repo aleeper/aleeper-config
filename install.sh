@@ -73,7 +73,7 @@ echo "  Done."
 # ── Nerd Font (JetBrainsMono — required for p10k and nvim icons) ──────────────
 echo ""
 echo "── Nerd Font ────────────────────────────────────────────────"
-if fc-list 2>/dev/null | grep -qi "JetBrainsMono Nerd"; then
+if [[ -f "$FONT_DIR/JetBrainsMonoNerdFont-Regular.ttf" ]]; then
   echo "  Already installed: JetBrainsMono Nerd Font"
 else
   echo "  Installing JetBrainsMono Nerd Font..."
@@ -187,6 +187,23 @@ if [[ "$PLATFORM" != "Darwin" ]]; then
   else
     echo "  nvim 0.$NVIM_MINOR is recent enough, skipping."
   fi
+fi
+
+# ── GNOME keyboard shortcut for Alacritty (Linux only) ───────────────────────
+if [[ "$PLATFORM" != "Darwin" ]] && command -v gsettings >/dev/null 2>&1; then
+  echo ""
+  echo "── GNOME shortcut (Ctrl+Alt+T → Alacritty) ──────────────────"
+  _kb_base="org.gnome.settings-daemon.plugins.media-keys"
+  _kb_path="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+  # Clear the built-in terminal binding so it doesn't compete
+  gsettings set "$_kb_base" terminal '[]'
+  # Register Alacritty as a custom shortcut
+  gsettings set "$_kb_base" custom-keybindings "['$_kb_path']"
+  gsettings set "${_kb_base}.custom-keybinding:${_kb_path}" name    'Alacritty'
+  gsettings set "${_kb_base}.custom-keybinding:${_kb_path}" command 'alacritty'
+  gsettings set "${_kb_base}.custom-keybinding:${_kb_path}" binding '<Primary><Alt>t'
+  unset _kb_base _kb_path
+  echo "  Ctrl+Alt+T → alacritty"
 fi
 
 # ── Post-install notes ────────────────────────────────────────────────────────
