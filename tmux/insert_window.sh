@@ -2,9 +2,11 @@
 # Reorder tmux windows: move current window to a target index,
 # shifting intervening windows to fill the gap.
 target="$1"
-session="$(tmux display-message -p '#S')"
 current_index="$(tmux display-message -p '#I')"
 current_id="$(tmux display-message -p '#{window_id}')"
+
+# Disable auto-renumbering during moves so indices stay stable
+tmux set-option -g renumber-windows off
 
 # Temporarily move current window out of the way
 tmux move-window -s "$current_id" -t 999
@@ -22,3 +24,6 @@ elif [ "$current_index" -gt "$target" ]; then
 else
   tmux move-window -s 999 -t "$target"
 fi
+
+# Re-enable auto-renumbering
+tmux set-option -g renumber-windows on
