@@ -6,7 +6,7 @@ current_index="$(tmux display-message -p '#I')"
 current_id="$(tmux display-message -p '#{window_id}')"
 
 # Disable auto-renumbering during moves so indices stay stable
-tmux set-option -g renumber-windows off
+#tmux set-option -g renumber-windows off
 
 # Temporarily move current window out of the way
 tmux move-window -s "$current_id" -t 999
@@ -26,4 +26,4 @@ else
 fi
 
 # Re-enable auto-renumbering
-tmux set-option -g renumber-windows on
+#tmux set-option -g renumber-windows on
