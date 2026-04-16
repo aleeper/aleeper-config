@@ -15,7 +15,6 @@ setopt INC_APPEND_HISTORY
 setopt EXTENDED_HISTORY
 
 # ── Zsh options ───────────────────────────────────────────────────────────────
-setopt AUTO_CD         # type a dir name to cd into it
 setopt GLOBDOTS        # include dotfiles in glob patterns
 
 # ── Completions ───────────────────────────────────────────────────────────────
