@@ -111,6 +111,10 @@ nvm() {
   nvm "$@"
 }
 
+# ── Tmux environment sync ─────────────────────────────────────────────────────
+# Auto-refresh DISPLAY and other tmux-managed vars for new shells inside tmux
+[[ -n "$TMUX" ]] && eval "$(tmux show-environment -s 2>/dev/null)"
+
 # ── Cargo ─────────────────────────────────────────────────────────────────────
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
