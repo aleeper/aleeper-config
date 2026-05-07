@@ -116,6 +116,7 @@ else
 fi
 
 symlink bash/bashrc           ~/.bashrc
+symlink bash/inputrc          ~/.inputrc
 symlink zsh/zshrc             ~/.zshrc
 symlink zsh/p10k.zsh          ~/.p10k.zsh
 symlink git/gitconfig         ~/.gitconfig

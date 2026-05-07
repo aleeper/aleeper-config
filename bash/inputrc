@@ -1,0 +1,7 @@
+# Remap Ctrl+f/g to character back/forward (f left of g on keyboard = f back, g forward)
+"\C-f": backward-char
+"\C-g": forward-char
+
+# Remap Alt+f/g to word back/forward (same spatial logic, displaces Alt+b)
+"\ef": backward-word
+"\eg": forward-word
