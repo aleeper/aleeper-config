@@ -68,3 +68,11 @@
   helper = store
 [maintenance]
 	repo = /media/drive2/projects/applied3/.repo
+[safe]
+	directory = /media/drive2/projects/core-stack/flock
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

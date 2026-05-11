@@ -59,9 +59,14 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 bindkey '\e[1;3D' backward-word   # Alt+Left  (Alacritty Linux)
 bindkey '\e[1;3C' forward-word    # Alt+Right (Alacritty Linux)
 bindkey '\eb'     backward-word   # Option+Left  (macOS / some terminals)
-bindkey '\ef'     forward-word    # Option+Right (macOS / some terminals)
 bindkey '\e^H'    backward-kill-word  # Alt+Backspace — delete previous word
 bindkey '\e[3;3~' kill-word           # Alt+Delete   — delete next word
+
+# f/g as back/forward pair (f is left of g on keyboard)
+bindkey '^F'  backward-char   # Ctrl+f — char back
+bindkey '^G'  forward-char    # Ctrl+g — char forward
+bindkey '\ef' backward-word   # Alt+f  — word back
+bindkey '\eg' forward-word    # Alt+g  — word forward
 
 # ── Personal config ───────────────────────────────────────────────────────────
 source "$HOME/aleeper-config/shell/env.sh"

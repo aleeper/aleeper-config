@@ -126,10 +126,17 @@ symlink tmux/tmux.conf        ~/.tmux.conf
 symlink tmux/insert_window.sh ~/.tmux/insert_window.sh
 
 # Cursor and VSCode share the same settings format
-symlink cursor/settings.json    ~/.config/Cursor/User/settings.json
-symlink cursor/keybindings.json ~/.config/Cursor/User/keybindings.json
-symlink cursor/settings.json    ~/.config/Code/User/settings.json
-symlink cursor/keybindings.json ~/.config/Code/User/keybindings.json
+if [[ "$PLATFORM" == "Darwin" ]]; then
+  symlink cursor/settings.json    "$HOME/Library/Application Support/Cursor/User/settings.json"
+  symlink cursor/keybindings.json "$HOME/Library/Application Support/Cursor/User/keybindings.json"
+  symlink cursor/settings.json    "$HOME/Library/Application Support/Code/User/settings.json"
+  symlink cursor/keybindings.json "$HOME/Library/Application Support/Code/User/keybindings.json"
+else
+  symlink cursor/settings.json    ~/.config/Cursor/User/settings.json
+  symlink cursor/keybindings.json ~/.config/Cursor/User/keybindings.json
+  symlink cursor/settings.json    ~/.config/Code/User/settings.json
+  symlink cursor/keybindings.json ~/.config/Code/User/keybindings.json
+fi
 
 # ── Stub files (not in repo — add your secrets here) ─────────────────────────
 echo ""
