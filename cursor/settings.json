@@ -22,5 +22,10 @@
     "workbench.editor.wrapTabs": true,
     "cursor.composer.queueMessageDefaultBehavior": "queue",
     "git.blame.editorDecoration.enabled": true,
-    "gitlens.currentLine.enabled": false
+    "gitlens.currentLine.enabled": false,
+    "editor.accessibilitySupport": "off",
+    "remote.autoForwardPortsSource": "hybrid",
+    "remote.SSH.remotePlatform": {
+        "adam": "linux"
+    }
 }
