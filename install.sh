@@ -49,6 +49,7 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
     ncdu \
     neovim \
     ripgrep \
+    tmux \
     zoxide \
     zsh-autosuggestions \
     zsh-syntax-highlighting
@@ -68,6 +69,7 @@ else
     ncdu \
     pkg-config \
     ripgrep \
+    tmux \
     zoxide \
     zsh \
     zsh-autosuggestions \
@@ -104,6 +106,8 @@ clone_plugin https://github.com/romkatv/powerlevel10k.git \
   "$HOME/.config/zsh/plugins/powerlevel10k"
 clone_plugin https://github.com/projekt0n/github-theme-contrib.git \
   "$HOME/.personal-plugins/github-theme-contrib"
+clone_plugin https://github.com/tmux-plugins/tpm.git \
+  "$HOME/.tmux/plugins/tpm"
 
 # ── Symlinks ──────────────────────────────────────────────────────────────────
 echo ""
