@@ -119,6 +119,14 @@ nvm() {
 # Auto-refresh DISPLAY and other tmux-managed vars for new shells inside tmux
 [[ -n "$TMUX" ]] && eval "$(tmux show-environment -s 2>/dev/null)"
 
+# ── SSH agent forwarding ───────────────────────────────────────────────────────
+# Keep a stable symlink so tmux panes always find the current agent socket,
+# even after reattaching from a new SSH session.
+if [[ -n "$SSH_AUTH_SOCK" && "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh-agent-stable" ]]; then
+  ln -sf "$SSH_AUTH_SOCK" "$HOME/.ssh/ssh-agent-stable"
+  export SSH_AUTH_SOCK="$HOME/.ssh/ssh-agent-stable"
+fi
+
 # ── Cargo ─────────────────────────────────────────────────────────────────────
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
@@ -137,3 +145,4 @@ fi
 # ── Powerlevel10k config ──────────────────────────────────────────────────────
 # Run `p10k configure` to generate this file.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+export PATH="$HOME/.local/bin:$PATH"

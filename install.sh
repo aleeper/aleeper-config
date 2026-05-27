@@ -45,6 +45,7 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
     eza \
     fd \
     fzf \
+    git-branchless \
     git-delta \
     ncdu \
     neovim \
@@ -199,6 +200,19 @@ if [[ "$PLATFORM" != "Darwin" ]]; then
   source "$HOME/.cargo/env"
 fi
 
+# ── git-branchless (Linux — not in apt, install via cargo) ───────────────────
+if [[ "$PLATFORM" != "Darwin" ]]; then
+  echo ""
+  echo "── git-branchless ───────────────────────────────────────────"
+  if command -v git-branchless >/dev/null 2>&1 || [[ -f "$HOME/.cargo/bin/git-branchless" ]]; then
+    echo "  Already installed: $(git-branchless --version 2>/dev/null || $HOME/.cargo/bin/git-branchless --version)"
+  else
+    echo "  Installing git-branchless via cargo..."
+    cargo install git-branchless --locked
+    echo "  Installed: $(git-branchless --version)"
+  fi
+fi
+
 # ── Alacritty (Linux — build from source via cargo for latest version) ────────
 if [[ "$PLATFORM" != "Darwin" ]]; then
   echo ""
@@ -256,5 +270,6 @@ echo "── Done! Next steps: ────────────────�
 echo "  1. exec zsh                   (start zsh session)"
 echo "  2. p10k configure             (set up prompt, saves to ~/.p10k.zsh)"
 echo "  3. nvim                       (triggers lazy.nvim plugin bootstrap)"
-echo "  4. Fill in ~/.shell.d/work.sh (tokens, docker helpers, company PATH)"
+echo "  4. tmux, then prefix+I        (install tmux plugins via tpm)"
+echo "  5. Fill in ~/.shell.d/work.sh (tokens, docker helpers, company PATH)"
 echo ""
