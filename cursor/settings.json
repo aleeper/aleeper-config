@@ -27,5 +27,6 @@
     "remote.autoForwardPortsSource": "hybrid",
     "remote.SSH.remotePlatform": {
         "adam": "linux"
-    }
+    },
+    "window.autoDetectColorScheme": true
 }

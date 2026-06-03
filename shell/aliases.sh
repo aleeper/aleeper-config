@@ -22,8 +22,17 @@ alias resh='source ~/.zshrc'
 alias editbash='${VISUAL:-${EDITOR:-vim}} ~/.bashrc'
 alias rebash='source ~/.bashrc'
 
-# Swap left Windows key and left Ctrl (personal keyboard preference)
-[ -n "$DISPLAY" ] && setxkbmap -option ctrl:swap_lwin_lctl 2>/dev/null
+# Swap left Windows key and left Ctrl (Mac-style keyboard on Linux)
+# Run `pc-kbd` to persist PC mode; `mac-kbd` to revert.
+if [ -n "$DISPLAY" ]; then
+  if [ -f "$HOME/.config/pc-keyboard" ]; then
+    setxkbmap -option "" 2>/dev/null
+  else
+    setxkbmap -option ctrl:swap_lwin_lctl 2>/dev/null
+  fi
+fi
+alias mac-kbd='rm -f ~/.config/pc-keyboard && [ -n "$DISPLAY" ] && setxkbmap -option ctrl:swap_lwin_lctl'
+alias pc-kbd='touch ~/.config/pc-keyboard && [ -n "$DISPLAY" ] && setxkbmap -option ""'
 
 # ── Modern tool replacements (fall back gracefully if not installed) ───────────
 
