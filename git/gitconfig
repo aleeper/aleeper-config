@@ -68,6 +68,8 @@
   helper = store
 [maintenance]
 	repo = /media/drive2/projects/applied3/.repo
+	repo = /media/drive2/projects/robotics.git/.repo
+	repo = /media/drive2/projects/robotics/.repo
 [safe]
 	directory = /media/drive2/projects/core-stack/flock
 	directory = /opt/deploy/robotics
