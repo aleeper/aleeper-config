@@ -14,7 +14,9 @@ alias lsdir='for i in $(ls -d */); do echo ${i%%/}; done'
 alias tmls='tmux ls'
 alias tma='tmux attach -t'
 alias tmr='tmux rename-session -t'
-alias tmn='tmux new -s'
+# tmn [name] — new session; auto-numbered if no name given
+unalias tmn 2>/dev/null
+tmn() { if [ $# -gt 0 ]; then tmux new -s "$@"; else tmux new; fi; }
 
 # Editor / shell reload
 alias editsh='${VISUAL:-${EDITOR:-vim}} ~/.zshrc'
@@ -33,6 +35,21 @@ if [ -n "$DISPLAY" ]; then
 fi
 alias mac-kbd='rm -f ~/.config/pc-keyboard && [ -n "$DISPLAY" ] && setxkbmap -option ctrl:swap_lwin_lctl'
 alias pc-kbd='touch ~/.config/pc-keyboard && [ -n "$DISPLAY" ] && setxkbmap -option ""'
+
+# Ctrl+Alt+T terminal (GNOME). Persists across logins via dconf.
+# `alacritty-term` → Alacritty; `default-term` → stock GNOME Terminal.
+if command -v gsettings >/dev/null 2>&1; then
+  _kb_base='org.gnome.settings-daemon.plugins.media-keys'
+  _kb_alac="$_kb_base.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+  alias alacritty-term="gsettings set $_kb_base terminal '[]' && gsettings set $_kb_alac binding '<Primary><Alt>t'"
+  alias default-term="gsettings set $_kb_alac binding '' && gsettings reset $_kb_base terminal"
+  unset _kb_base _kb_alac
+fi
+
+# Login shell (prompts for password; applies to new terminal windows).
+# Affects GNOME Terminal and SSH only — Alacritty and tmux are pinned to zsh.
+alias zsh-shell='chsh -s "$(command -v zsh)" && echo "Login shell → zsh (new terminals)"'
+alias bash-shell='chsh -s "$(command -v bash)" && echo "Login shell → bash (new terminals)"'
 
 # ── Modern tool replacements (fall back gracefully if not installed) ───────────
 

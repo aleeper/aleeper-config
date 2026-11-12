@@ -231,13 +231,18 @@ if [[ "$PLATFORM" != "Darwin" ]]; then
   echo ""
   echo "── Neovim ───────────────────────────────────────────────────"
   # grep -oP is Linux-only; use sed for portability
-  NVIM_MINOR="$(nvim --version 2>/dev/null | head -1 | sed 's/.*v[0-9]*\.\([0-9]*\).*/\1/')"
+  # Guard: under `set -euo pipefail`, a missing nvim would silently abort the script
+  NVIM_MINOR=""
+  if command -v nvim >/dev/null 2>&1; then
+    NVIM_MINOR="$(nvim --version | head -1 | sed 's/.*v[0-9]*\.\([0-9]*\).*/\1/')"
+  fi
   if [[ -z "$NVIM_MINOR" ]] || [[ "$NVIM_MINOR" -lt 11 ]]; then
     echo "  nvim minor ${NVIM_MINOR:-?} is too old (need 0.11+), installing latest..."
     TMP="$(mktemp -d)"
     curl -fsSL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz \
       -o "$TMP/nvim.tar.gz"
     tar xzf "$TMP/nvim.tar.gz" -C "$TMP"
+    sudo rm -rf /opt/nvim   # else mv nests inside an old install
     sudo mv "$TMP/nvim-linux-x86_64" /opt/nvim
     sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
     rm -rf "$TMP"
@@ -258,7 +263,8 @@ if [[ "$PLATFORM" != "Darwin" ]] && command -v gsettings >/dev/null 2>&1; then
   # Register Alacritty as a custom shortcut
   gsettings set "$_kb_base" custom-keybindings "['$_kb_path']"
   gsettings set "${_kb_base}.custom-keybinding:${_kb_path}" name    'Alacritty'
-  gsettings set "${_kb_base}.custom-keybinding:${_kb_path}" command 'alacritty'
+  # Absolute path: GNOME's environment doesn't have ~/.cargo/bin on PATH
+  gsettings set "${_kb_base}.custom-keybinding:${_kb_path}" command "$HOME/.cargo/bin/alacritty"
   gsettings set "${_kb_base}.custom-keybinding:${_kb_path}" binding '<Primary><Alt>t'
   unset _kb_base _kb_path
   echo "  Ctrl+Alt+T → alacritty"
