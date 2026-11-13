@@ -15,7 +15,7 @@ alias tmls='tmux ls'
 alias tma='tmux attach -t'
 alias tmr='tmux rename-session -t'
 # tmn [name] — new session; auto-numbered if no name given
-unalias tmn 2>/dev/null
+unalias tmn 2>/dev/null || :
 tmn() { if [ $# -gt 0 ]; then tmux new -s "$@"; else tmux new; fi; }
 
 # Editor / shell reload
@@ -24,26 +24,67 @@ alias resh='source ~/.zshrc'
 alias editbash='${VISUAL:-${EDITOR:-vim}} ~/.bashrc'
 alias rebash='source ~/.bashrc'
 
-# Swap left Windows key and left Ctrl (Mac-style keyboard on Linux)
-# Run `pc-kbd` to persist PC mode; `mac-kbd` to revert.
-if [ -n "$DISPLAY" ]; then
-  if [ -f "$HOME/.config/pc-keyboard" ]; then
-    setxkbmap -option "" 2>/dev/null
-  else
-    setxkbmap -option ctrl:swap_lwin_lctl 2>/dev/null
+# Swap left Windows key and left Ctrl (Mac-style keyboard on Linux).
+# GNOME owns the keymap on Wayland; setxkbmap only affects Xwayland there.
+_keyboard_apply() {
+  if [ "$(uname -s)" = Darwin ]; then
+    printf '%s\n' 'Keyboard switching is for Linux; use macOS keyboard settings instead.' >&2
+    return 1
   fi
+  case ":${XDG_CURRENT_DESKTOP:-}:" in
+    *:GNOME:*|*:gnome:*)
+      _keyboard_options=$(gsettings get org.gnome.desktop.input-sources xkb-options) || return
+      _keyboard_options=$(python3 -c '
+import ast, sys
+options = ast.literal_eval(sys.argv[1].removeprefix("@as "))
+options = [option for option in options if option != "ctrl:swap_lwin_lctl"]
+if sys.argv[2] == "mac":
+    options.append("ctrl:swap_lwin_lctl")
+print(options)
+' "$_keyboard_options" "$1") || return
+      gsettings set org.gnome.desktop.input-sources xkb-options "$_keyboard_options"
+      ;;
+    *)
+      if [ "${XDG_SESSION_TYPE:-}" = wayland ]; then
+        printf '%s\n' 'Keyboard switching on Wayland requires GNOME.' >&2
+        return 1
+      fi
+      if [ -z "${DISPLAY:-}" ]; then
+        printf '%s\n' 'No graphical session available for keyboard switching.' >&2
+        return 1
+      fi
+      if [ "$1" = mac ]; then
+        setxkbmap -option ctrl:swap_lwin_lctl
+      else
+        setxkbmap -option ""
+      fi
+      ;;
+  esac
+}
+
+_keyboard_set() {
+  _keyboard_apply "$1" || return
+  mkdir -p "$HOME/.config"
+  if [ "$1" = mac ]; then
+    rm -f "$HOME/.config/pc-keyboard"
+  else
+    touch "$HOME/.config/pc-keyboard"
+  fi
+}
+
+if [ -f "$HOME/.config/pc-keyboard" ]; then
+  _keyboard_apply pc >/dev/null 2>&1 || :
+else
+  _keyboard_apply mac >/dev/null 2>&1 || :
 fi
-alias mac-kbd='rm -f ~/.config/pc-keyboard && [ -n "$DISPLAY" ] && setxkbmap -option ctrl:swap_lwin_lctl'
-alias pc-kbd='touch ~/.config/pc-keyboard && [ -n "$DISPLAY" ] && setxkbmap -option ""'
+alias mac-kbd='_keyboard_set mac'
+alias pc-kbd='_keyboard_set pc'
 
 # Ctrl+Alt+T terminal (GNOME). Persists across logins via dconf.
 # `alacritty-term` → Alacritty; `default-term` → stock GNOME Terminal.
 if command -v gsettings >/dev/null 2>&1; then
-  _kb_base='org.gnome.settings-daemon.plugins.media-keys'
-  _kb_alac="$_kb_base.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-  alias alacritty-term="gsettings set $_kb_base terminal '[]' && gsettings set $_kb_alac binding '<Primary><Alt>t'"
-  alias default-term="gsettings set $_kb_alac binding '' && gsettings reset $_kb_base terminal"
-  unset _kb_base _kb_alac
+  alias alacritty-term='bash "$HOME/aleeper-config/shell/setup-linux-desktop.sh" alacritty'
+  alias default-term='bash "$HOME/aleeper-config/shell/setup-linux-desktop.sh" default'
 fi
 
 # Login shell (prompts for password; applies to new terminal windows).
