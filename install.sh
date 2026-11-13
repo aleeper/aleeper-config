@@ -49,6 +49,7 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
     git-delta \
     ncdu \
     neovim \
+    python3 \
     ripgrep \
     tmux \
     zoxide \
@@ -69,6 +70,7 @@ else
     libxkbcommon-dev \
     ncdu \
     pkg-config \
+    python3 \
     ripgrep \
     tmux \
     zoxide \
@@ -129,6 +131,9 @@ symlink vim/vimrc             ~/.vimrc
 symlink nvim                  ~/.config/nvim
 symlink tmux/tmux.conf        ~/.tmux.conf
 symlink tmux/insert_window.sh ~/.tmux/insert_window.sh
+
+# Keep the rest of Claude Code's local settings intact on both platforms.
+python3 "$REPO/claude/install_statusline.py"
 
 # Cursor and VSCode share the same settings format
 if [[ "$PLATFORM" == "Darwin" ]]; then

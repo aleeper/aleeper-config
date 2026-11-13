@@ -37,6 +37,7 @@ class MacOSInstallTests(unittest.TestCase):
             repo = root / 'repo'
             repo.mkdir()
             shutil.copyfile(REPO / 'install.sh', repo / 'install.sh')
+            shutil.copytree(REPO / 'claude', repo / 'claude', ignore=shutil.ignore_patterns('__pycache__'))
             (repo / 'shell').mkdir()
             (repo / 'shell/setup-linux-desktop.sh').write_text('exit 99\n')
             home = root / 'home'
@@ -62,9 +63,13 @@ class MacOSInstallTests(unittest.TestCase):
                                     text=True, capture_output=True)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertIn('install --cask alacritty', (root / 'brew.log').read_text())
+            self.assertIn('python3', (root / 'brew.log').read_text())
             self.assertEqual(os.readlink(home / '.config/alacritty/platform.toml'),
                              str(repo / 'alacritty/macos.toml'))
             self.assertNotIn('Alacritty desktop integration', result.stdout)
+            self.assertEqual((home / '.claude/statusline-command.sh').resolve(),
+                             repo / 'claude/statusline-command.sh')
+            self.assertTrue((home / '.claude/settings.json').is_file())
 
 
 if __name__ == '__main__':
