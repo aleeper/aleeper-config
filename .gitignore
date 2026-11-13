@@ -2,3 +2,7 @@ google-translate-cli-master/
 gti/
 when-changed/
 bin/gti
+
+# Python bytecode
+__pycache__/
+*.py[cod]
